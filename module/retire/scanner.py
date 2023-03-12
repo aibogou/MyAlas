@@ -13,7 +13,7 @@ from module.ocr.ocr import Digit
 from module.retire.assets import (TEMPLATE_FLEET_1, TEMPLATE_FLEET_2,
                                   TEMPLATE_FLEET_3, TEMPLATE_FLEET_4,
                                   TEMPLATE_FLEET_5, TEMPLATE_FLEET_6,
-                                  TEMPLATE_IN_BATTLE, TEMPLATE_IN_COMMISSION, TEMPLATE_IN_HARD)
+                                  TEMPLATE_IN_BATTLE, TEMPLATE_IN_COMMISSION)
 from module.retire.dock import (CARD_EMOTION_GRIDS, CARD_GRIDS,
                                 CARD_LEVEL_GRIDS, CARD_RARITY_GRIDS)
 
@@ -233,11 +233,10 @@ class StatusScanner(Scanner):
         super().__init__()
         self._results = []
         self.grids = CARD_GRIDS
-        self.value_list: List[str] = ['free', 'battle', 'commission', 'hard']
+        self.value_list: List[str] = ['free', 'battle', 'commission']
         self.templates = {
             TEMPLATE_IN_BATTLE: 'battle',
             TEMPLATE_IN_COMMISSION: 'commission',
-            TEMPLATE_IN_HARD: 'hard'
         }
 
     def _match(self, image) -> str:
@@ -387,7 +386,7 @@ class ShipScanner(Scanner):
             level (tuple): (lower, upper). Will be limited in range [1, 125]
             emotion (tuple): (lower, upper). Will be limited in range [0, 150]
             fleet (int): 0 means not in any fleet. Will be limited in range [0, 6]
-            status (str, list): ['any', 'commission', 'battle', 'hard']
+            status (str, list): ['any', 'commission', 'battle']
         """
         for attr in self.limitaion.keys():
             value = kwargs.get(attr, self.limitaion[attr])

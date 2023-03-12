@@ -6,7 +6,7 @@
 
 Scheduler:
   Enable: false
-  NextRun: 2023-01-01 00:00:00
+  NextRun: 2020-01-01 00:00:00
   Command: Alas
   SuccessInterval:
     value: 0
@@ -66,7 +66,7 @@ DropRecord:
   AzurStatsID: null
   API:
     value: default
-    option: [ default, cn_gz_reverse_proxy, cn_sh_reverse_proxy ]
+    option: [ default, cn_gz_reverse_proxy]
   ResearchRecord:
     value: do_not
     option: [ do_not, save, upload, save_and_upload ]
@@ -182,7 +182,7 @@ Emotion:
     option: [ calculate, ignore, calculate_ignore ]
   Fleet1Value: 119
   Fleet1Record:
-    value: 2023-01-01 00:00:00
+    value: 2020-01-01 00:00:00
     display: disabled
   Fleet1Control:
     value: prevent_yellow_face
@@ -193,7 +193,7 @@ Emotion:
   Fleet1Oath: false
   Fleet2Value: 119
   Fleet2Record:
-    value: 2023-01-01 00:00:00
+    value: 2020-01-01 00:00:00
     display: disabled
   Fleet2Control:
     value: prevent_yellow_face
@@ -239,12 +239,7 @@ GemsFarming:
     option: [ ship, ship_equip ]
   ChangeVanguard:
     value: ship
-    option: [ ship, ship_equip ]
-  ALLowLowVanguardLevel: true
-  FleetNumberInHardMode:
-    value: 0
-    option: [ 0, 1, 2 ]
-  StopIFAutoNotEnsured: true
+    option: [ disabled, ship, ship_equip ]
   CommonCV:
     value: any
     option: [ any, langley, bogue, ranger, hermes ]
@@ -254,7 +249,7 @@ GemsFarming:
 
 EventGeneral:
   PtLimit: 0
-  TimeLimit: 2023-01-01 00:00:00
+  TimeLimit: 2020-01-01 00:00:00
 TaskBalancer:
   Enable: false
   CoinLimit: 10000
@@ -563,19 +558,15 @@ Hard:
     value: 1
     option: [ 1, 2 ]
 Exercise:
-  DelayUntilHoursBeforeNextUpdate:
-    value: 12
-    option: [ 1, 2, 3, 4, 5, 12]
   OpponentChooseMode:
     value: max_exp
     option: [ max_exp, easiest, leftmost, easiest_else_exp ]
   OpponentTrial: 1
   ExercisePreserve: 0
-  EmptyOnceOnSecondFriday: false
   LowHpThreshold: 0.4
   LowHpConfirmWait: 0.1
   OpponentRefreshValue: 0
-  OpponentRefreshRecord: 2023-01-01 00:00:00
+  OpponentRefreshRecord: 2020-01-01 00:00:00
 Sos:
   Chapter:
     value: 3
@@ -609,9 +600,6 @@ OpsiFleet:
   Fleet:
     value: 1
     option: [ 1, 2, 3, 4 ]
-  FleetMode:
-    value: combat_auto
-    option: [ combat_auto, combat_manual, stand_still_in_the_middle, hide_in_bottom_left ]
   Submarine: false
 OpsiExplore:
   SpecialRadar: false
@@ -671,107 +659,3 @@ AzurLaneUncensored:
   Repository: https://gitee.com/LmeSzinc/AzurLaneUncensored
 GameManager:
   AutoRestart: true
-
-GGHandler:
-  Enabled: false
-  ServerLocation:
-    value: cn
-    option: [ cn, jp, en, tw ]
-  GGMethod:
-    value: u2
-    option: [ screenshot, u2 ]
-  GGPanelConfirmTime: 5
-  RestartATX: false
-  GGPackageName: com.
-  AutoRestartGG: false
-  RestartEverytime: true
-  GGMultiplyingFactor: 200
-  DisabledTask:
-    value: disable_all_dangerous_task
-    option: [
-      disable_all_dangerous_task,
-      disable_guild_and_dangerous,
-      disable_exercise,
-      enable_all,
-    ]
-PowerLimit:
-  Exercise: 16500
-  Raid: 16500
-  Ash: 16500
-
-# ==================== Dashboard ====================
-Oil:
-  Value: 0
-  Limit: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-Coin:
-  Value: 0
-  Limit: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-Gem:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-Pt:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-YellowCoin:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-PurpleCoin:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-ActionPoint:
-  Value: 0
-  Total: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-Merit:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-Cube:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-Core:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-Medal:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00
-GuildCoin:
-  Value: 0
-  Color:
-    value: ^000000
-    display: hide
-  Record: 2020-01-01 00:00:00

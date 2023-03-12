@@ -131,15 +131,6 @@ class ConfigGenerator:
         return read_file(filepath_argument('gui'))
 
     @cached_property
-    def dashboard(self):
-        """
-        <dashboard>
-          - <group>
-        """
-        return read_file(filepath_argument('dashboard'))
-
-
-    @cached_property
     @timer
     def args(self):
         """
@@ -153,9 +144,7 @@ class ConfigGenerator:
         """
         # Construct args
         data = {}
-        # Add dashboard to args
-        dashboard_and_task = {**self.task, **self.dashboard}
-        for task, groups in dashboard_and_task.items():
+        for task, groups in self.task.items():
             # Add storage to all task
             groups.append('Storage')
             for group in groups:
@@ -395,7 +384,6 @@ class ConfigGenerator:
                     else:
                         insert('Event')
                         insert('Event2')
-                        insert('Event3')
                         insert('EventA')
                         insert('EventB')
                         insert('EventC')
@@ -404,7 +392,7 @@ class ConfigGenerator:
                         insert('GemsFarming')
 
         # Remove campaign_main from event list
-        for task in ['Event', 'Event2', 'Event3', 'EventA', 'EventB', 'EventC', 'EventD', 'EventSp', 'Raid', 'RaidDaily', 'WarArchives']:
+        for task in ['Event', 'Event2', 'EventA', 'EventB', 'EventC', 'EventD', 'EventSp', 'Raid', 'RaidDaily', 'WarArchives']:
             options = deep_get(self.args, keys=f'{task}.Campaign.Event.option')
             options = [option for option in options if option != 'campaign_main']
             deep_set(self.args, keys=f'{task}.Campaign.Event.option', value=options)
@@ -518,6 +506,7 @@ class ConfigUpdater:
         (('GemsFarming.GemsFarming.VanguardChange', 'GemsFarming.GemsFarming.VanguardEquipChange'),
          'GemsFarming.GemsFarming.ChangeVanguard',
          change_ship_redirect),
+        ('Alas.DropRecord.API', 'Alas.DropRecord.API', api_redirect2)
     ]
     redirection += [
         (
@@ -565,7 +554,7 @@ class ConfigUpdater:
         # Update to latest event
         server = to_server(deep_get(new, 'Alas.Emulator.PackageName', 'cn'))
         if not is_template:
-            for task in ['Event', 'Event2', 'Event3', 'EventA', 'EventB', 'EventC', 'EventD', 'EventSp', 'Raid', 'RaidDaily']:
+            for task in ['Event', 'Event2', 'EventA', 'EventB', 'EventC', 'EventD', 'EventSp', 'Raid', 'RaidDaily']:
                 deep_set(new,
                          keys=f'{task}.Campaign.Event',
                          value=deep_get(self.args, f'{task}.Campaign.Event.{server}'))
@@ -610,7 +599,7 @@ class ConfigUpdater:
                 value = []
                 error = False
                 for attribute in source:
-                    tmp = deep_get(old, keys=attribute, default=None)
+                    tmp = deep_get(old, keys=attribute)
                     if tmp is None:
                         error = True
                         continue
@@ -618,7 +607,7 @@ class ConfigUpdater:
                 if error:
                     continue
             else:
-                value = deep_get(old, keys=source, default=None)
+                value = deep_get(old, keys=source)
                 if value is None:
                     continue
 
@@ -626,10 +615,11 @@ class ConfigUpdater:
                 value = update_func(value)
 
             if isinstance(target, tuple):
-                for i in range(0, len(target)):
-                    if deep_get(old, keys=target[i], default=None) is None:
-                        deep_set(new, keys=target[i], value=value[i])
-            elif deep_get(old, keys=target, default=None) is None:
+                for k, v in zip(target, value):
+                    # Allow update same key
+                    if (deep_get(old, keys=k) is None) or (source == target):
+                        deep_set(new, keys=k, value=v)
+            elif (deep_get(old, keys=target) is None) or (source == target):
                 deep_set(new, keys=target, value=value)
 
         return new
@@ -646,7 +636,11 @@ class ConfigUpdater:
             dict:
         """
         old = read_file(filepath_config(config_name))
-        return self.config_update(old, is_template=is_template)
+        new = self.config_update(old, is_template=is_template)
+        # The updated config did not write into file, although it doesn't matters.
+        # Commented for performance issue
+        # self.write_file(config_name, new)
+        return new
 
     @staticmethod
     def write_file(config_name, data, mod_name='alas'):
